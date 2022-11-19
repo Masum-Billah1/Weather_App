@@ -20,7 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var temp, description, currently, city,humidity, windSpeed,lat,lon,local;
+  var temp, description, currently, city,humidity, windSpeed,lat,lon,local,feels_like;
 
   TextEditingController textEditingController=TextEditingController();
 
@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
       this.currently = results['weather'][0]['main'];
       this.humidity = results['main']['humidity'];
       this.windSpeed = results['wind']['speed'];
+      this.feels_like = results['main']['feels_like'];
     });
   }
   void citySearch(){
@@ -81,6 +82,10 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(
+        title: Text('Weather App')
+      ),
       body: Column(
         children: <Widget> [
           Container (
@@ -88,7 +93,7 @@ class _HomeState extends State<Home> {
             child: Column(
 
               children: <Widget> [
-                SizedBox(height:100),
+                SizedBox(height:30),
                 Row(
                   children: [
                     SizedBox(width:50),
@@ -140,7 +145,7 @@ class _HomeState extends State<Home> {
                 Text(
                   temp!=null ? temp.toString()+" °C" : "loading",
                   style: TextStyle(
-                    color: Color(0xFF00E676),
+                    color: Colors.lightGreen,
                     fontSize: 20.0,
                     fontWeight: FontWeight.w600,
                   ),
@@ -168,6 +173,11 @@ class _HomeState extends State<Home> {
                     leading: FaIcon(FontAwesomeIcons.sun),
                     title: Text("Humidity"),
                     trailing: Text(humidity!=null ? humidity.toString() : "Loading"),
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.sun),
+                    title: Text("feelslike"),
+                    trailing: Text(feels_like!=null ? feels_like.toString() : "Loading"),
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.wind),
