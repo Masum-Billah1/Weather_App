@@ -57,9 +57,18 @@ class _HomeState extends State<Home> {
   void getWeather() async {
     // String ApiKey="ed3271385dcc46a2192c3d6082980989";
     //String url="https://api.openweathermap.org/data/2.5/weather?q={london}&appid={Apikey}";
-    var response = await http.get(Uri.parse("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=ed3271385dcc46a2192c3d6082980989")); //api key
+    //var response = await http.get(Uri.parse("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=ed3271385dcc46a2192c3d6082980989")); //api key
+    var response = await http.get(Uri.parse("http://api.weatherapi.com/v1/forecast.json?key=00b236b533f44cc7b2540516222011&q=$city&days=7"));
     var results = jsonDecode(response.body);
+
     setState(() {
+      this.temp=results['current']['temp_c'];
+      this.description = results['current']['condition']['text'];
+    });
+
+
+
+    /*setState(() {
       this.lat=results['coord']['lat'];
       this.lon=results['coord']['lon'];
       this.temp =results['main']['temp'];
@@ -70,7 +79,7 @@ class _HomeState extends State<Home> {
       this.feels_like = results['main']['feels_like'];
       sunrise=results['sys']['sunrise'];
       sunset=results['sys']['sunset'];
-    });
+    });*/
   }
   void citySearch(){
     setState(() {
@@ -167,17 +176,21 @@ class _HomeState extends State<Home> {
 
               child: ListView(
                 children: <Widget>[
-                  ListTile(
+                  /*ListTile(
                     leading: FaIcon(FontAwesomeIcons.thermometer),
                     title: Text("Temperature"),
                     trailing: Text(temp!=null ? temp.toString()+"\u00B0C" : "just wait, loading"),
+                  ),*/
+                  Expanded(
+                    child:
+                    Image.network('https://media.istockphoto.com/vectors/flat-thermometer-icon-temperature-gauge-icon-vector-illustration-vector-id1142141943?k=20&m=1142141943&s=612x612&w=0&h=xNuS1asCRApULuHR3USDz3Rskjpv10VfJLZ7v_jiF10=',height: 50,width:50,),
                   ),
                   ListTile(
                     leading: FaIcon(FontAwesomeIcons.cloud),
                     title: Text("Weather"),
                     trailing: Text(description!=null ? description.toString() : "Loading"),
                   ),
-                  ListTile(
+                  /*ListTile(
                     leading: FaIcon(FontAwesomeIcons.sun),
                     title: Text("Humidity"),
                     trailing: Text(humidity!=null ? humidity.toString() : "Loading"),
@@ -210,7 +223,7 @@ class _HomeState extends State<Home> {
                         Image.network('https://media.istockphoto.com/id/1172427455/photo/beautiful-sunset-over-the-tropical-sea.jpg?s=612x612&w=0&k=20&c=i3R3cbE94hdu6PRWT7cQBStY_wknVzl2pFCjQppzTBg=',height:100,width:100),
                       ],
                     ),
-                  )
+                  )*/
 
 
 
